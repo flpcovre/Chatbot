@@ -1,4 +1,4 @@
-# chatbot
+# Chatbot
 
 Desenvolvimento de um Chatbot especializado em tarefas pessoais.
 Integração com a API da Openai
