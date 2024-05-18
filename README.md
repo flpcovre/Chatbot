@@ -1,6 +1,8 @@
 # chatbot
 
-A new Flutter project.
+Desenvolvimento de um Chatbot especializado em tarefas pessoais.
+Integração com a API da Openai
+Modelo: GPT-3.5 Turbo
 
 ## Getting Started
 
