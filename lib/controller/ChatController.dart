@@ -5,7 +5,7 @@ import 'package:chatbot/model/ChatAPI.dart';
 class ChatController {
   final ChatAPI chatAPI = ChatAPI();
 
-  Future<String?> sendMessage({required message}) async {
+  Future<String?> sendMessage({required String message}) async {
     await chatAPI.createThread();
     await chatAPI.createMessage(message: message);
     await chatAPI.createRun();

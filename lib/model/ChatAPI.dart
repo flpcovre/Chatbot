@@ -7,7 +7,7 @@ class ChatAPI {
   final String _assistantId = 'asst_azoqVHr0SVa3oOmA9owDoySB';
   final _requestApi = const Api(headers: <String, String>{
                                 'Content-Type': 'application/json',
-                                'Authorization': 'Bearer (Insira a chave da API OPENAI)',
+                                'Authorization': 'Bearer {Insira o Token aqui}',
                                 'OpenAI-Beta': 'assistants=v2'
                               });
 

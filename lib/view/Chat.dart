@@ -63,14 +63,11 @@ class ChatState extends State<Chat> {
 
   void _sendMessage({required bool isUser}) async {
     if (_textController.text.trim() == '') return;
-    String? response = await _chatController.sendMessage(message: _textController.text);
 
-    //print(json.decode(response.body)['id']);
-    print(response);
-
-  /*  setState(() {
+    String message = _textController.text;
+    setState(() {
       _messages.add(ChatFactory(
-        message: _textController.text,
+        message: message,
         isUser: isUser,
       ));
       _textController.clear();
@@ -81,7 +78,15 @@ class ChatState extends State<Chat> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
     );
-   */
+
+    String? response = await _chatController.sendMessage(message: message);
+    print(response);
+    setState(() {
+      _messages.add(ChatFactory(
+        message: '$response',
+        isUser: false,
+      ));
+    });
   }
 
   @override
