@@ -1,13 +1,12 @@
-import 'package:http/http.dart' as http;
-import 'package:chatbot/model/ChatAPI.dart';
-import 'package:chatbot/model/Api.dart';
+import 'package:chatbot/model/Assistant.dart';
+import 'package:chatbot/model/HttpRequest.dart';
 
 class ChatController {
-  ChatAPI? chatAPI;
+  Assistant? assistant;
 
   ChatController() {
-    chatAPI = ChatAPI(
-        apiInterface: Api(),
+    assistant = Assistant(
+        apiInterface: HttpRequest(),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ${const String.fromEnvironment('OPENAI_TOKEN')}',
@@ -17,9 +16,9 @@ class ChatController {
   }
 
   Future<String?> sendMessage({required String message}) async {
-    await chatAPI?.createThread();
-    await chatAPI?.createMessage(message: message);
-    await chatAPI?.createRun();
-    return await chatAPI?.assistantResponse();
+    await assistant?.createThread();
+    await assistant?.createMessage(message: message);
+    await assistant?.createRun();
+    return await assistant?.assistantResponse();
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:chatbot/view/Chat.dart';
-
 void main() {
   runApp(MyApp());
 }

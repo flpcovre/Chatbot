@@ -1,12 +1,11 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:chatbot/model/Openai.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class ChatAPI extends Openai {
+class Assistant extends Openai {
   String? _thread;
 
-  ChatAPI({required super.apiInterface, required super.headers, super.baseUri});
+  Assistant({required super.apiInterface, required super.headers, super.baseUri});
 
   Future<http.Response> createThread() async {
     final createThread = await post(url: '/threads');
@@ -16,11 +15,11 @@ class ChatAPI extends Openai {
 
   Future<http.Response> createMessage({required message}) async {
     return await post(
-       url: '/threads/$_thread/messages',
-       body: <String, String>{
-        'role': 'user',
-        'content': '$message'
-       }
+        url: '/threads/$_thread/messages',
+        body: <String, String>{
+          'role': 'user',
+          'content': '$message'
+        }
     );
   }
 
@@ -43,7 +42,7 @@ class ChatAPI extends Openai {
 
       role = json.decode(messages.body)['data'][0]['role'];
       if (role == 'assistant') {
-        messageResponse = json.decode(messages.body)['data'][0]['content'][0]['text']['value'];
+        messageResponse = await json.decode(messages.body)['data'][0]['content'][0]['text']['value'];
         break;
       }
       await Future.delayed(const Duration(seconds: 1));
