@@ -9,8 +9,20 @@ class Openai {
     _request?.setHeaders(headers: headers);
   }
 
-  getRequest() {
-    return _request;
+  Future<http.Response> post({required String url, Map<String, dynamic>? body}) async {
+    return await _request.post(url: url, body: body);
+  }
+
+  Future<http.Response> get({required String url}) async {
+    return await _request.get(url: url);
+  }
+
+  void setHeaders({required headers}) {
+    _request.setHeaders(headers: headers);
+  }
+
+  void setBaseUri({required String baseUri}) {
+    _request.setBaseUri(baseUri: baseUri);
   }
 
 }
