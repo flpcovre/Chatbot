@@ -9,13 +9,13 @@ class ChatAPI extends Openai {
   ChatAPI({required super.apiInterface, required super.headers, super.baseUri});
 
   Future<http.Response> createThread() async {
-    final createThread = await getRequest().post(url: '/threads');
+    final createThread = await post(url: '/threads');
     _thread = json.decode(createThread.body)['id'];
     return createThread;
   }
 
   Future<http.Response> createMessage({required message}) async {
-    return await getRequest().post(
+    return await post(
        url: '/threads/$_thread/messages',
        body: <String, String>{
         'role': 'user',
@@ -25,7 +25,7 @@ class ChatAPI extends Openai {
   }
 
   Future<http.Response> createRun() async {
-    return await getRequest().post(
+    return await post(
         url: '/threads/$_thread/runs',
         body: <String, String>{
           'assistant_id': const String.fromEnvironment('ASSINTANT_ID'),
@@ -39,7 +39,7 @@ class ChatAPI extends Openai {
     String? messageResponse;
 
     while (role == 'user') {
-      final messages = await getRequest().get(url: '/threads/$_thread/messages');
+      final messages = await get(url: '/threads/$_thread/messages');
 
       role = json.decode(messages.body)['data'][0]['role'];
       if (role == 'assistant') {
