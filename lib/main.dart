@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:chatbot/view/Chat.dart';
+import 'package:chatbot/view/mysql.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'ChatBot Example',
-      home: Chat(),
+      home: Mysql(),
     );
   }
 }
