@@ -1,10 +1,13 @@
 import 'dart:io';
+import 'package:chatbot/model/dao/DataBase.dart';
+import 'package:chatbot/model/dao/MySql.dart';
 import 'package:flutter/material.dart';
 import 'package:chatbot/view/Chat.dart';
-import 'package:chatbot/view/mysql.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  MySql mySql = MySql();
+  await DataBase.init(mySql);
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -14,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'ChatBot Example',
-      home: Mysql(),
+      home: Chat(),
     );
   }
 }

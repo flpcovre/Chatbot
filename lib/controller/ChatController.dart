@@ -1,4 +1,4 @@
-import 'package:chatbot/model/Assistant.dart';
+import 'package:chatbot/model/Openai/Assistant.dart';
 import 'package:chatbot/model/HttpRequest.dart';
 
 class ChatController {
@@ -7,6 +7,7 @@ class ChatController {
   ChatController() {
     assistant = Assistant(
         apiInterface: HttpRequest(),
+        assistantId: const String.fromEnvironment("ASSISTANT1"),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ${const String.fromEnvironment('OPENAI_TOKEN')}',
@@ -16,9 +17,16 @@ class ChatController {
   }
 
   Future<String?> sendMessage({required String message}) async {
+   /* await assistant?.createThread();
+    await assistant?.createMessage(message: message);
+    await assistant?.createRun();
+    return await assistant?.assistantResponse();*/
+
     await assistant?.createThread();
     await assistant?.createMessage(message: message);
     await assistant?.createRun();
-    return await assistant?.assistantResponse();
+    await assistant?.verifyRun();
+    return await assistant?.listMessage();
+
   }
 }
