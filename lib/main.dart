@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:chatbot/model/dao/DataBase.dart';
 import 'package:chatbot/model/dao/MySql.dart';
+import 'package:chatbot/view/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:chatbot/view/Chat.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'ChatBot Example',
-      home: Chat(),
+      home: Login(),
     );
   }
 }

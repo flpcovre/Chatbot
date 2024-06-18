@@ -19,7 +19,7 @@ class ChatState extends State<Chat> {
 
   AppBar header() {
     return AppBar(
-      title: const Text('ChatBot Example'),
+      title: const Text('Personal ChatBot'),
     );
   }
 
@@ -39,8 +39,9 @@ class ChatState extends State<Chat> {
   Widget footer() {
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
+      child: Container(
+        padding: EdgeInsets.all(15.0),
+        height: 80,
         child: TextFormField(
             controller: _textController,
             decoration: InputDecoration(
