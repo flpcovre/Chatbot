@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ChatFactory extends StatelessWidget {
+class BubbleFactory extends StatelessWidget {
   final String message;
   final bool isUser;
 
-  const ChatFactory({super.key, required this.message, required this.isUser});
+  const BubbleFactory({super.key, required this.message, required this.isUser});
 
   @override
   Widget build(BuildContext context) {

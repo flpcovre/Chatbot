@@ -9,10 +9,14 @@ class Assistant extends Openai {
 
   Assistant({required super.apiInterface, required super.headers, super.baseUri, required this.assistantId});
 
-  Future<http.Response> createThread() async {
+  Future<dynamic> createThread({String threadId = ''}) async {
+    if (threadId != '') {
+      _thread = threadId;
+      return _thread;
+    }
     final createThread = await post(url: '/threads');
     _thread = await json.decode(createThread.body)['id'];
-    return createThread;
+    return _thread;
   }
 
   Future<http.Response> createMessage({required message}) async {
@@ -49,6 +53,12 @@ class Assistant extends Openai {
     final request = await get(url: '/threads/$_thread/messages');
     final message = await json.decode(request.body)['data'][0]['content'][0]['text']['value'];
     return message;
+  }
+
+  Future listAllMessages() async {
+    final request = await get(url: '/threads/$_thread/messages');
+    final messages = await json.decode(request.body)['data'];
+    return messages;
   }
 
 }

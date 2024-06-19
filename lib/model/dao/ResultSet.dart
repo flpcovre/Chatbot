@@ -6,7 +6,7 @@ abstract class ResultSet extends DataBase {
 
   Future<dynamic> findById(List id) async {
     String ids = id.join(", ");
-    await DataBase.conn?.query("SELECT * FROM $table WHERE $primaryKey IN $ids");
+    await DataBase.conn?.query("SELECT * FROM $table WHERE $primaryKey IN ($ids)");
     var results = DataBase.conn?.fetchAll();
     return results;
   }

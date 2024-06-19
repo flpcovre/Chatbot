@@ -66,7 +66,7 @@ class _LoginState extends State<Login> {
                       children: [
                         if (_loginError)
                           const Text(
-                            'Usuário ou senha incorretos',
+                            'Incorrect username or password.',
                             style: TextStyle(color: Colors.red),
                           ),
                         SizedBox(
@@ -129,12 +129,12 @@ class _LoginState extends State<Login> {
                               ),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                    var isAuth = await _loginController.auth(_userTextController.text, _passwordTextController.text);
+                                    var isAuth = await _loginController.signIn(_userTextController.text, _passwordTextController.text);
                                     if (isAuth) {
                                       setState(() {
                                         _loginError = false;
                                       });
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Chat()));
+                                      Navigator.of(context).pushReplacementNamed('/chat');
                                     } else {
                                       setState(() {
                                         _loginError = true;

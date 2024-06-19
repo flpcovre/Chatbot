@@ -1,6 +1,9 @@
+import 'package:chatbot/view/Chat.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chatbot/controller/ChatController.dart';
-import 'package:chatbot/factories/ChatFactory.dart';
+import 'package:chatbot/factories/BubbleFactory.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Chat extends StatefulWidget {
   const Chat({super.key});
@@ -11,11 +14,63 @@ class Chat extends StatefulWidget {
 
 class ChatState extends State<Chat> {
   final TextEditingController _textController = TextEditingController();
-  final List<ChatFactory> _messages = [
-    const ChatFactory(message: 'Olá, como posso te ajudar?', isUser: false)
-  ];
   final ScrollController _scrollController = ScrollController();
   final ChatController _chatController = ChatController();
+  late List<BubbleFactory> _messages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadMessages();
+  }
+
+  Future<void> loadMessages() async {
+    final List<BubbleFactory> messages = await _chatController.listAllMessages();
+    setState(() {
+      _messages = messages;
+    });
+  }
+
+  Widget navBar() {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          const UserAccountsDrawerHeader(
+              accountName: Text('Filipe'),
+              accountEmail: Text('example@email.com'),
+              currentAccountPicture: CircleAvatar(
+                child: ClipOval(
+                    child: Icon(Icons.person, size: 60),
+                ),
+              ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.restore_from_trash_outlined),
+            title: const Text('Limpar Conversa'),
+            onTap: () {
+                setState(() {
+                  _messages.clear();
+                  _messages.add(
+                      const BubbleFactory(message: 'Olá, como posso te ajudar?', isUser: false)
+                  );
+                });
+                _chatController.clearChat();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Log out'),
+            onTap: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.remove('userId');
+              Navigator.of(context).pushReplacementNamed('/login');
+            },
+          )
+        ],
+      ),
+    );
+  }
 
   AppBar header() {
     return AppBar(
@@ -48,6 +103,7 @@ class ChatState extends State<Chat> {
               hintText: 'Digite algo',
               suffixIcon: IconButton(
                 onPressed: () {
+                  _chatController.listAllMessages();
                   _sendMessage(isUser: true);
                 },
                 icon: const Icon(Icons.send),
@@ -66,7 +122,7 @@ class ChatState extends State<Chat> {
 
     String message = _textController.text;
     setState(() {
-      _messages.add(ChatFactory(
+      _messages.add(BubbleFactory(
         message: message,
         isUser: isUser,
       ));
@@ -82,7 +138,7 @@ class ChatState extends State<Chat> {
     String? response = await _chatController.sendMessage(message: message);
     print(response);
     setState(() {
-      _messages.add(ChatFactory(
+      _messages.add(BubbleFactory(
         message: '$response',
         isUser: false,
       ));
@@ -92,6 +148,7 @@ class ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: navBar(),
       appBar: header(),
       body: body(),
       bottomNavigationBar: footer(),
