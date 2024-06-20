@@ -73,12 +73,7 @@ class ChatState extends State<Chat> {
 
   AppBar header() {
     return AppBar(
-      title: const Text(
-        'Personal ChatBot',
-        style: TextStyle(
-          color: Colors.white
-        ),
-      ),
+      title: Image.asset('lib/assets/img/robot.png', width: 40),
       iconTheme: const IconThemeData(color: Colors.white),
       backgroundColor: Colors.deepPurple,
       centerTitle: true,
