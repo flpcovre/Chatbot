@@ -3,12 +3,7 @@ import 'package:http/http.dart' as http;
 
 class Openai {
 
-  /// Attribute responsible for performing actions with the api
-  /// @final ApiInterface
   final ApiInterface _request;
-
-  /// Base url for integration with Openai api
-  /// @final String
   final String _baseUri = 'https://api.openai.com/v1';
 
   Openai({required ApiInterface apiInterface, required headers, baseUri}) : _request = apiInterface {
