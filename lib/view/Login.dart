@@ -32,9 +32,11 @@ class _LoginState extends State<Login> {
         ),
         child: Center(
           child: SingleChildScrollView(
+              reverse: true,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Image.asset('lib/assets/img/robot.png', width: 130),
                   const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Center(
@@ -51,7 +53,7 @@ class _LoginState extends State<Login> {
                             textAlign: TextAlign.center,
                           ),
                           Text(
-                            'Welcome to your personal ChatBot.',
+                            'Welcome to your Personal ChatBot.',
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white
