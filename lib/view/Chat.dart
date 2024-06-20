@@ -99,8 +99,8 @@ class ChatState extends State<Chat> {
       child: Padding(
             padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Container(
-              padding: EdgeInsets.all(10.0),
-              height: 80,
+              padding: EdgeInsets.all(5.0),
+              height: 70,
               child: TextFormField(
                   controller: _textController,
                   decoration: InputDecoration(
@@ -112,9 +112,7 @@ class ChatState extends State<Chat> {
                       },
                       icon: const Icon(Icons.send),
                     ),
-                    border: const OutlineInputBorder(
-                        borderRadius:  BorderRadius.all(Radius.circular(15.0))
-                    ),
+                    border: const OutlineInputBorder(),
                   )
               ),
             ),
