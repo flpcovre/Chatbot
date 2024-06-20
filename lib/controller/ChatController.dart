@@ -36,7 +36,10 @@ class ChatController {
     await assistant?.createMessage(message: message);
     await assistant?.createRun();
     await assistant?.verifyRun();
-    return await assistant?.listMessage();
+    String? messageResponse = await assistant?.listMessage();
+    RegExp exp = RegExp(r'【[^【】]*】');
+    final clearMessage = messageResponse?.replaceAll(exp, '');
+    return clearMessage;
   }
 
   Future clearChat() async {
@@ -45,6 +48,7 @@ class ChatController {
 
   Future listAllMessages() async {
     final List<BubbleFactory> messages = [];
+    RegExp exp = RegExp(r'【[^【】]*】');
 
     var rs = await ResultSet.select("SELECT cod_thread FROM threads WHERE cod_usuario = $userId AND ativo = 1");
 
@@ -54,16 +58,18 @@ class ChatController {
       );
       var data = await assistant?.listAllMessages();
       messages.add(
-          const BubbleFactory(message: 'Olá, como posso te ajudar?', isUser: false)
+          const BubbleFactory(message: 'Olá, como posso te ajudar?', type: 'A')
       );
       data.forEach((value) {
+        String message = value['content'][0]['text']['value'].replaceAll(exp, '');
+
         messages.insert(1,
-            BubbleFactory(message: '${value['content'][0]['text']['value']}', isUser: (value['role'] == 'assistant' ? false : true))
+            BubbleFactory(message: message, type: (value['role'] == 'assistant' ? 'A' : 'U'))
         );
       });
     } else {
       messages.add(
-          const BubbleFactory(message: 'Olá, como posso te ajudar?', isUser: false)
+          const BubbleFactory(message: 'Olá, como posso te ajudar?', type: 'A')
       );
     }
 

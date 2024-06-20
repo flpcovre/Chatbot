@@ -51,13 +51,15 @@ class Assistant extends Openai {
 
   Future<String?> listMessage() async {
     final request = await get(url: '/threads/$_thread/messages');
-    final message = await json.decode(request.body)['data'][0]['content'][0]['text']['value'];
+    final decodedJson = utf8.decode(request.body.runes.toList());
+    final message = jsonDecode(decodedJson)['data'][0]['content'][0]['text']['value'];
     return message;
   }
 
   Future listAllMessages() async {
     final request = await get(url: '/threads/$_thread/messages');
-    final messages = await json.decode(request.body)['data'];
+    final decodedJson = utf8.decode(request.body.runes.toList());
+    final messages = jsonDecode(decodedJson)['data'];
     return messages;
   }
 

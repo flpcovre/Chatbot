@@ -1,5 +1,4 @@
 import 'package:chatbot/view/Chat.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chatbot/controller/ChatController.dart';
 import 'package:chatbot/factories/BubbleFactory.dart';
@@ -52,7 +51,7 @@ class ChatState extends State<Chat> {
                 setState(() {
                   _messages.clear();
                   _messages.add(
-                      const BubbleFactory(message: 'Olá, como posso te ajudar?', isUser: false)
+                      const BubbleFactory(message: 'Olá, como posso te ajudar?', type: 'A')
                   );
                 });
                 _chatController.clearChat();
@@ -74,45 +73,56 @@ class ChatState extends State<Chat> {
 
   AppBar header() {
     return AppBar(
-      title: const Text('Personal ChatBot'),
+      title: const Text(
+        'Personal ChatBot',
+        style: TextStyle(
+          color: Colors.white
+        ),
+      ),
+      iconTheme: const IconThemeData(color: Colors.white),
+      backgroundColor: Colors.deepPurple,
+      centerTitle: true,
     );
   }
 
   Widget body() {
     return SingleChildScrollView(
-      reverse: true,
-      controller: _scrollController,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 15),
-        child: Column(
-          children: _messages,
+        reverse: true,
+        controller: _scrollController,
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 15),
+          child: Column(
+            children: _messages,
+          ),
         ),
-      ),
     );
   }
 
   Widget footer() {
-    return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: Container(
-        padding: EdgeInsets.all(15.0),
-        height: 80,
-        child: TextFormField(
-            controller: _textController,
-            decoration: InputDecoration(
-              hintText: 'Digite algo',
-              suffixIcon: IconButton(
-                onPressed: () {
-                  _chatController.listAllMessages();
-                  _sendMessage(isUser: true);
-                },
-                icon: const Icon(Icons.send),
+    return Container(
+      color: Colors.white,
+      child: Padding(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              padding: EdgeInsets.all(10.0),
+              height: 80,
+              child: TextFormField(
+                  controller: _textController,
+                  decoration: InputDecoration(
+                    hintText: 'Digite algo',
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        _chatController.listAllMessages();
+                        _sendMessage(isUser: true);
+                      },
+                      icon: const Icon(Icons.send),
+                    ),
+                    border: const OutlineInputBorder(
+                        borderRadius:  BorderRadius.all(Radius.circular(15.0))
+                    ),
+                  )
               ),
-              border: const OutlineInputBorder(
-                  borderRadius:  BorderRadius.all(Radius.circular(15.0))
-              ),
-            )
-        ),
+            ),
       ),
     );
   }
@@ -124,9 +134,15 @@ class ChatState extends State<Chat> {
     setState(() {
       _messages.add(BubbleFactory(
         message: message,
-        isUser: isUser,
+        type: 'U',
       ));
       _textController.clear();
+    });
+
+    await Future.delayed( const Duration(milliseconds: 500));
+
+    setState(() {
+      _messages.add(const BubbleFactory(message: '', type: 'T'));
     });
 
     _scrollController.animateTo(
@@ -137,10 +153,13 @@ class ChatState extends State<Chat> {
 
     String? response = await _chatController.sendMessage(message: message);
     print(response);
+
+    _messages.removeLast();
+
     setState(() {
       _messages.add(BubbleFactory(
         message: '$response',
-        isUser: false,
+        type: 'A',
       ));
     });
   }
@@ -148,6 +167,7 @@ class ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.deepPurple,
       drawer: navBar(),
       appBar: header(),
       body: body(),

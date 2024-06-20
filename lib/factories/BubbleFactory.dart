@@ -2,24 +2,16 @@ import 'package:flutter/material.dart';
 
 class BubbleFactory extends StatelessWidget {
   final String message;
-  final bool isUser;
+  final String type;
 
-  const BubbleFactory({super.key, required this.message, required this.isUser});
+  const BubbleFactory({super.key, required this.message, required this.type});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment:
-      isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+      type == 'U' ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
-        if (!isUser)
-          Container(
-            margin: const EdgeInsets.only(top: 45, left: 5),
-            child: const Icon(
-              Icons.account_circle,
-              size: 20,
-            ),
-          ),
         Flexible(
           flex: 1,
           child: Container(
@@ -27,14 +19,14 @@ class BubbleFactory extends StatelessWidget {
             padding:
             const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
             decoration: BoxDecoration(
-              color: isUser ? Colors.blue[100] : Colors.grey[300],
+              color: type == 'U' ? Colors.blue[100] : Colors.grey[300],
               borderRadius: BorderRadius.only(
                 topLeft: const Radius.circular(15.0),
                 topRight: const Radius.circular(15.0),
-                bottomLeft: isUser
+                bottomLeft: type == 'U'
                     ? const Radius.circular(15.0)
                     : const Radius.circular(0),
-                bottomRight: isUser
+                bottomRight: type == 'U'
                     ? const Radius.circular(0)
                     : const Radius.circular(15.0),
               ),
@@ -46,20 +38,21 @@ class BubbleFactory extends StatelessWidget {
                 ),
               ],
             ),
-            child: Text(
+            child: (type == 'A' || type == 'U')
+            ? Text(
               message,
               style: const TextStyle(
                 color: Colors.black87,
                 fontSize: 16.0,
               ),
-            ),
+            )
+            : Image.asset(
+                'lib/assets/img/loading.gif',
+                width: 23,
+                height: 23,
+            )
           ),
         ),
-        if (isUser)
-          Container(
-            margin: const EdgeInsets.only(top: 45, right: 5),
-            child: const Icon(Icons.account_circle, size: 20),
-          ),
       ],
     );
   }
