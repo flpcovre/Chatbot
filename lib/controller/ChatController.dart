@@ -4,6 +4,7 @@ import 'package:chatbot/model/HttpRequest.dart';
 import 'package:chatbot/model/SharedPrefs.dart';
 import 'package:chatbot/model/Usuario.dart';
 import 'package:chatbot/model/dao/ResultSet.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChatController {
   Assistant? assistant;
@@ -13,10 +14,10 @@ class ChatController {
   ChatController() {
     assistant = Assistant(
         apiInterface: HttpRequest(),
-        assistantId: const String.fromEnvironment("ASSISTANT1"),
+        assistantId: dotenv.env['ASSISTANT1'] ?? '',
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${const String.fromEnvironment('OPENAI_TOKEN')}',
+          'Authorization': 'Bearer ${dotenv.env['OPENAI_TOKEN']}',
           'OpenAI-Beta': 'assistants=v2'
         }
     );

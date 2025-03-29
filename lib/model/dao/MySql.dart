@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:chatbot/interfaces/DbInterface.dart';
 
@@ -14,11 +15,11 @@ class MySql implements DbInterface {
 
 
   MySql({String? database, String? host, String? user, String? password, int? port}) {
-    _dbName = database ?? const String.fromEnvironment('DBNAME');
-    _dbHost = host ?? const String.fromEnvironment('DBHOST');
-    _dbUser = user ?? const String.fromEnvironment('DBUSER');
-    _dbPassword = password ?? const String.fromEnvironment('DBPASSWORD');
-    _dbPort = port ?? const int.fromEnvironment("DBPORT");
+    _dbName = database ?? dotenv.env['DBNAME'] ?? '';
+    _dbHost = host ?? dotenv.env['DBHOST'] ?? '';
+    _dbUser = user ?? dotenv.env['DBUSER'] ?? '';
+    _dbPassword = password ?? dotenv.env['DBPASSWORD'] ?? '';
+    _dbPort = port ?? int.tryParse(dotenv.env['DBPORT'] ?? '0') ?? 0;
   }
 
   @override

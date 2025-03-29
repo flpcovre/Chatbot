@@ -28,6 +28,7 @@ flutter:
   assets:
     - lib/assets/img/loading.gif
     - lib/assets/img/robot.png
+    - .env
   fonts:
     - family: happy
       fonts:
