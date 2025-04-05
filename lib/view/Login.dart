@@ -96,7 +96,7 @@ class _LoginState extends State<Login> {
                                   decoration: const InputDecoration(
                                       labelStyle: TextStyle(color: Colors.white),
                                       prefixIcon: Icon(Icons.person, color: Colors.white),
-                                      hintText: 'Enter your username',
+                                      hintText: 'Enter your e-mail',
                                       hintStyle: TextStyle(color: Colors.white)
                                   ),
                                   validator: (user) {
