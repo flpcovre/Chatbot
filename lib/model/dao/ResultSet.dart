@@ -6,7 +6,8 @@ abstract class ResultSet extends DataBase {
 
   Future<dynamic> findById(List id) async {
     String ids = id.join(", ");
-    await DataBase.conn?.query("SELECT * FROM $table WHERE $primaryKey IN ($ids)");
+    await DataBase.conn
+        ?.query("SELECT * FROM $table WHERE $primaryKey IN ($ids)");
     var results = DataBase.conn?.fetchAll();
     return results;
   }
@@ -20,7 +21,8 @@ abstract class ResultSet extends DataBase {
   Future create(Map<String, String> data) async {
     final columns = data.keys.join(', ');
     final values = data.values.map((value) => "'$value'").join(', ');
-    await DataBase.conn?.query("INSERT INTO $table ($columns) VALUES ($values)");
+    await DataBase.conn
+        ?.query("INSERT INTO $table ($columns) VALUES ($values)");
   }
 
   Future update(Map<String, String> data, List id) async {
@@ -32,12 +34,14 @@ abstract class ResultSet extends DataBase {
     String result = keyValuePairs.join(', ');
     String ids = id.join(", ");
 
-    await DataBase.conn?.query("UPDATE $table SET $result WHERE $primaryKey IN ($ids)");
+    await DataBase.conn
+        ?.query("UPDATE $table SET $result WHERE $primaryKey IN ($ids)");
   }
 
   Future delete(List id) async {
     String ids = id.join(", ");
-    await DataBase.conn?.query("DELETE FROM $table WHERE $primaryKey IN ($ids)");
+    await DataBase.conn
+        ?.query("DELETE FROM $table WHERE $primaryKey IN ($ids)");
   }
 
   static Future select(sql) async {

@@ -1,9 +1,9 @@
-import 'package:chatbot/interfaces/DbInterface.dart';
+import 'package:chatbot/interfaces/IDatabase.dart';
 
 class DataBase {
-  static DbInterface? conn;
+  static IDatabase? conn;
 
-  static Future init (DbInterface dbInterface) async {
+  static Future init(IDatabase dbInterface) async {
     conn = dbInterface;
     await conn?.connect();
   }

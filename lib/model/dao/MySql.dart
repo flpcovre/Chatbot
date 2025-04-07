@@ -1,9 +1,9 @@
 import 'dart:ffi';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mysql_client/mysql_client.dart';
-import 'package:chatbot/interfaces/DbInterface.dart';
+import 'package:chatbot/interfaces/IDatabase.dart';
 
-class MySql implements DbInterface {
+class MySql implements IDatabase {
   dynamic _conn;
   dynamic _statement;
   List<dynamic> _result = [];
@@ -13,8 +13,12 @@ class MySql implements DbInterface {
   late final String _dbPassword;
   late final int _dbPort;
 
-
-  MySql({String? database, String? host, String? user, String? password, int? port}) {
+  MySql(
+      {String? database,
+      String? host,
+      String? user,
+      String? password,
+      int? port}) {
     _dbName = database ?? dotenv.env['DBNAME'] ?? '';
     _dbHost = host ?? dotenv.env['DBHOST'] ?? '';
     _dbUser = user ?? dotenv.env['DBUSER'] ?? '';
@@ -30,8 +34,7 @@ class MySql implements DbInterface {
         userName: _dbUser,
         password: _dbPassword,
         databaseName: _dbName,
-        secure: false
-    );
+        secure: false);
     await _conn.connect();
   }
 
@@ -53,5 +56,4 @@ class MySql implements DbInterface {
     }
     return _result;
   }
-
 }

@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-abstract class ApiInterface {
+abstract class IApi {
   Future<http.Response> post({required String url, Map<String, dynamic>? body});
   Future<http.Response> get({required String url});
   void setHeaders({required headers});

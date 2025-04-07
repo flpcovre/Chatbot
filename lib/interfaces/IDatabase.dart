@@ -1,5 +1,4 @@
-
-abstract class DbInterface {
+abstract class IDatabase {
   Future connect();
   void disconnect();
   Future query(String sql);

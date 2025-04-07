@@ -1,15 +1,16 @@
-import 'package:chatbot/interfaces/ApiInterface.dart';
+import 'package:chatbot/interfaces/IApi.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class HttpRequest implements ApiInterface {
+class HttpRequest implements IApi {
   Map<String, String>? headers;
   String? baseUri;
 
   HttpRequest({this.headers, this.baseUri});
 
   @override
-  Future<http.Response> post({required String url, Map<String, dynamic>? body}) async {
+  Future<http.Response> post(
+      {required String url, Map<String, dynamic>? body}) async {
     return await http.post(
       Uri.parse(baseUri! + url),
       headers: headers,
@@ -19,10 +20,7 @@ class HttpRequest implements ApiInterface {
 
   @override
   Future<http.Response> get({required String url}) async {
-    return await http.get(
-        Uri.parse(baseUri! + url),
-        headers: headers
-    );
+    return await http.get(Uri.parse(baseUri! + url), headers: headers);
   }
 
   @override

@@ -1,17 +1,18 @@
-import 'package:chatbot/interfaces/ApiInterface.dart';
+import 'package:chatbot/interfaces/IApi.dart';
 import 'package:http/http.dart' as http;
 
 class Openai {
-
-  final ApiInterface _request;
+  final IApi _request;
   final String _baseUri = 'https://api.openai.com/v1';
 
-  Openai({required ApiInterface apiInterface, required headers, baseUri}) : _request = apiInterface {
+  Openai({required IApi apiInterface, required headers, baseUri})
+      : _request = apiInterface {
     setBaseUri(baseUri: baseUri ?? _baseUri);
     setHeaders(headers: headers);
   }
 
-  Future<http.Response> post({required String url, Map<String, dynamic>? body}) async {
+  Future<http.Response> post(
+      {required String url, Map<String, dynamic>? body}) async {
     return await _request.post(url: url, body: body);
   }
 
@@ -26,5 +27,4 @@ class Openai {
   void setBaseUri({required String baseUri}) {
     _request.setBaseUri(baseUri: baseUri);
   }
-
 }
