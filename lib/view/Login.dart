@@ -1,7 +1,7 @@
-import 'package:chatbot/view/Chat.dart';
 import 'package:chatbot/view/UserRegister.dart';
 import 'package:flutter/material.dart';
 import 'package:chatbot/controller/LoginController.dart';
+import 'package:chatbot/utils/validators.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -20,18 +20,13 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.deepPurple,
-              Colors.purple
-            ]
-          )
-        ),
-        child: Center(
-          child: SingleChildScrollView(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          decoration: const BoxDecoration(
+              gradient:
+                  LinearGradient(colors: [Colors.deepPurple, Colors.purple])),
+          child: Center(
+            child: SingleChildScrollView(
               reverse: true,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -46,27 +41,22 @@ class _LoginState extends State<Login> {
                           Text(
                             'Hello!',
                             style: TextStyle(
-                              fontFamily: 'happy',
-                              fontSize: 60,
-                              color: Colors.white
-                            ),
+                                fontFamily: 'happy',
+                                fontSize: 60,
+                                color: Colors.white),
                             textAlign: TextAlign.center,
                           ),
                           Text(
                             'Welcome to your Personal ChatBot.',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white
-                            ),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                             textAlign: TextAlign.center,
                           ),
                           Text(
                             'Sign in to get started.',
                             style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white
-                            ),
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -82,7 +72,7 @@ class _LoginState extends State<Login> {
                           children: [
                             if (_loginError)
                               const Text(
-                                'Incorrect username or password.',
+                                'Incorrect email or password.',
                                 style: TextStyle(color: Colors.red),
                               ),
                             SizedBox(
@@ -94,13 +84,15 @@ class _LoginState extends State<Login> {
                                   style: const TextStyle(color: Colors.white),
                                   controller: _userTextController,
                                   decoration: const InputDecoration(
-                                      labelStyle: TextStyle(color: Colors.white),
-                                      prefixIcon: Icon(Icons.person, color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
+                                      prefixIcon: Icon(Icons.person,
+                                          color: Colors.white),
                                       hintText: 'Enter your e-mail',
-                                      hintStyle: TextStyle(color: Colors.white)
-                                  ),
-                                  validator: (user) {
-                                    if (user == null || user.isEmpty) {
+                                      hintStyle:
+                                          TextStyle(color: Colors.white)),
+                                  validator: (value) {
+                                    if (!isAValidEmail(value)) {
                                       _loginError = true;
                                     }
                                     return null;
@@ -118,13 +110,15 @@ class _LoginState extends State<Login> {
                                   controller: _passwordTextController,
                                   obscureText: true,
                                   decoration: const InputDecoration(
-                                      labelStyle: TextStyle(color: Colors.white),
-                                      prefixIcon: Icon(Icons.key, color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
+                                      prefixIcon:
+                                          Icon(Icons.key, color: Colors.white),
                                       hintText: 'Enter your password',
-                                      hintStyle: TextStyle(color: Colors.white)
-                                  ),
-                                  validator: (password) {
-                                    if (password == null || password.isEmpty) {
+                                      hintStyle:
+                                          TextStyle(color: Colors.white)),
+                                  validator: (value) {
+                                    if (!isAValidPassword(value)) {
                                       setState(() {
                                         _loginError = true;
                                       });
@@ -141,26 +135,30 @@ class _LoginState extends State<Login> {
                                 padding: const EdgeInsets.all(5.0),
                                 child: ElevatedButton(
                                   style: ButtonStyle(
-                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5.0),
-                                      ),
-                                    )
-                                  ),
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                  )),
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
-                                        var isAuth = await _loginController.signIn(_userTextController.text, _passwordTextController.text);
-                                        if (isAuth) {
-                                          setState(() {
-                                            _loginError = false;
-                                          });
-                                          Navigator.of(context).pushReplacementNamed('/chat');
-                                        } else {
-                                          setState(() {
-                                            _loginError = true;
-                                          });
-                                          return;
-                                        }
+                                      var isAuth =
+                                          await _loginController.signIn(
+                                              _userTextController.text,
+                                              _passwordTextController.text);
+                                      if (isAuth) {
+                                        setState(() {
+                                          _loginError = false;
+                                        });
+                                        Navigator.of(context)
+                                            .pushReplacementNamed('/chat');
+                                      } else {
+                                        setState(() {
+                                          _loginError = true;
+                                        });
+                                        return;
+                                      }
                                     }
                                   },
                                   child: const Text('Sign In'),
@@ -169,20 +167,23 @@ class _LoginState extends State<Login> {
                             ),
                             SizedBox(
                               child: Padding(
-                                padding: const EdgeInsets.all(0),
-                                child: TextButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _loginError = false;
-                                    });
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const UserRegister()));
-                                  },
-                                  child: Text(
-                                    'Sign Up Now',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                )
-                              ),
+                                  padding: const EdgeInsets.all(0),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _loginError = false;
+                                      });
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const UserRegister()));
+                                    },
+                                    child: Text(
+                                      'Sign Up Now',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  )),
                             )
                           ],
                         ),
@@ -193,8 +194,6 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-      )
-    );
+        ));
   }
 }
-

@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:chatbot/interfaces/IDatabase.dart';

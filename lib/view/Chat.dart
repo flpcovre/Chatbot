@@ -1,4 +1,3 @@
-import 'package:chatbot/view/Chat.dart';
 import 'package:flutter/material.dart';
 import 'package:chatbot/controller/ChatController.dart';
 import 'package:chatbot/factories/BubbleFactory.dart';
@@ -24,7 +23,8 @@ class ChatState extends State<Chat> {
   }
 
   Future<void> loadMessages() async {
-    final List<BubbleFactory> messages = await _chatController.listAllMessages();
+    final List<BubbleFactory> messages =
+        await _chatController.listAllMessages();
     setState(() {
       _messages = messages;
     });
@@ -36,25 +36,24 @@ class ChatState extends State<Chat> {
         padding: EdgeInsets.zero,
         children: [
           const UserAccountsDrawerHeader(
-              accountName: Text('Filipe'),
-              accountEmail: Text('example@email.com'),
-              currentAccountPicture: CircleAvatar(
-                child: ClipOval(
-                    child: Icon(Icons.person, size: 60),
-                ),
+            accountName: Text('Filipe'),
+            accountEmail: Text('example@email.com'),
+            currentAccountPicture: CircleAvatar(
+              child: ClipOval(
+                child: Icon(Icons.person, size: 60),
               ),
+            ),
           ),
           ListTile(
             leading: const Icon(Icons.restore_from_trash_outlined),
             title: const Text('Limpar Conversa'),
             onTap: () {
-                setState(() {
-                  _messages.clear();
-                  _messages.add(
-                      const BubbleFactory(message: 'Olá, como posso te ajudar?', type: 'A')
-                  );
-                });
-                _chatController.clearChat();
+              setState(() {
+                _messages.clear();
+                _messages.add(const BubbleFactory(
+                    message: 'Olá, como posso te ajudar?', type: 'A'));
+              });
+              _chatController.clearChat();
             },
           ),
           ListTile(
@@ -82,14 +81,14 @@ class ChatState extends State<Chat> {
 
   Widget body() {
     return SingleChildScrollView(
-        reverse: true,
-        controller: _scrollController,
-        child: Container(
-          margin: const EdgeInsets.only(bottom: 15),
-          child: Column(
-            children: _messages,
-          ),
+      reverse: true,
+      controller: _scrollController,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 15),
+        child: Column(
+          children: _messages,
         ),
+      ),
     );
   }
 
@@ -97,25 +96,25 @@ class ChatState extends State<Chat> {
     return Container(
       color: Colors.white,
       child: Padding(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Container(
-              padding: EdgeInsets.all(5.0),
-              height: 70,
-              child: TextFormField(
-                  controller: _textController,
-                  decoration: InputDecoration(
-                    hintText: 'Digite algo',
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        _chatController.listAllMessages();
-                        _sendMessage(isUser: true);
-                      },
-                      icon: const Icon(Icons.send),
-                    ),
-                    border: const OutlineInputBorder(),
-                  )
-              ),
-            ),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Container(
+          padding: EdgeInsets.all(5.0),
+          height: 70,
+          child: TextFormField(
+              controller: _textController,
+              decoration: InputDecoration(
+                hintText: 'Digite algo',
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    _chatController.listAllMessages();
+                    _sendMessage(isUser: true);
+                  },
+                  icon: const Icon(Icons.send),
+                ),
+                border: const OutlineInputBorder(),
+              )),
+        ),
       ),
     );
   }
@@ -132,7 +131,7 @@ class ChatState extends State<Chat> {
       _textController.clear();
     });
 
-    await Future.delayed( const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
 
     setState(() {
       _messages.add(const BubbleFactory(message: '', type: 'T'));

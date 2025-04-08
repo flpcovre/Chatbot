@@ -1,5 +1,4 @@
 import 'package:chatbot/model/dao/ResultSet.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class User extends ResultSet {
   @override

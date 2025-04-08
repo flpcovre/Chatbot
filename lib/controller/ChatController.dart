@@ -4,11 +4,9 @@ import 'package:chatbot/model/HttpRequest.dart';
 import 'package:chatbot/model/SharedPrefs.dart';
 import 'package:chatbot/model/dao/ResultSet.dart';
 import 'package:chatbot/repositories/ThreadsRepository.dart';
-import 'package:chatbot/repositories/UserRepository.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChatController {
-  final UserRepository _userRepository = UserRepository();
   final ThreadsRepository _threadsRepository = ThreadsRepository();
   final userId = SharedPrefs.instance.getString('userId') ?? '0';
 

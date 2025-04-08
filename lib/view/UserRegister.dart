@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:chatbot/controller/LoginController.dart';
 import 'package:chatbot/factories/DialogFactory.dart';
+import 'package:chatbot/utils/validators.dart';
 
 class UserRegister extends StatefulWidget {
   const UserRegister({super.key});
@@ -88,6 +89,14 @@ class _UserRegisterState extends State<UserRegister> {
                           child: TextFormField(
                             style: const TextStyle(color: Colors.white),
                             controller: _nameTextController,
+                            validator: (value) {
+                              if (!isAValidUserName(value)) {
+                                setState(() {
+                                  _registerError = true;
+                                });
+                              }
+                              return null;
+                            },
                             decoration: const InputDecoration(
                                 prefixIcon:
                                     Icon(Icons.person, color: Colors.white),
@@ -104,6 +113,14 @@ class _UserRegisterState extends State<UserRegister> {
                           child: TextFormField(
                             style: const TextStyle(color: Colors.white),
                             controller: _userTextController,
+                            validator: (value) {
+                              if (!isAValidEmail(value)) {
+                                setState(() {
+                                  _registerError = true;
+                                });
+                              }
+                              return null;
+                            },
                             decoration: const InputDecoration(
                                 prefixIcon:
                                     Icon(Icons.person, color: Colors.white),
@@ -120,6 +137,14 @@ class _UserRegisterState extends State<UserRegister> {
                           child: TextFormField(
                             style: const TextStyle(color: Colors.white),
                             controller: _firstPasswordTextController,
+                            validator: (value) {
+                              if (!isAValidPassword(value)) {
+                                setState(() {
+                                  _registerError = true;
+                                });
+                              }
+                              return null;
+                            },
                             obscureText: true,
                             decoration: const InputDecoration(
                                 prefixIcon:
@@ -137,6 +162,14 @@ class _UserRegisterState extends State<UserRegister> {
                           child: TextFormField(
                             style: const TextStyle(color: Colors.white),
                             controller: _secondPasswordTextController,
+                            validator: (value) {
+                              if (!isAValidPassword(value)) {
+                                setState(() {
+                                  _registerError = true;
+                                });
+                              }
+                              return null;
+                            },
                             obscureText: true,
                             decoration: const InputDecoration(
                                 prefixIcon:
